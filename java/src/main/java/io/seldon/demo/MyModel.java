@@ -1,5 +1,6 @@
 package io.seldon.demo;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.seldon.protos.PredictionProtos.DefaultData;
 import io.seldon.protos.PredictionProtos.SeldonMessage;
 import io.seldon.protos.PredictionProtos.Tensor;
@@ -7,6 +8,17 @@ import io.seldon.wrapper.api.SeldonPredictionService;
 import java.util.List;
 
 public class MyModel implements SeldonPredictionService {
+
+  public byte[] predict(byte[] payload) throws InvalidProtocolBufferException {
+    SeldonMessage input = SeldonMessage.parseFrom(payload);
+
+    SeldonMessage prediction = this.predict(input);
+    byte[] rawPrediction = prediction.toByteArray();
+    // System.out.printf("[JAVA] Raw prediction was %d elements long\n", rawPrediction.length);
+    // System.out.printf("[JAVA] Raw prediction was %s\n", Hex.encodeHexString(rawPrediction));
+
+    return rawPrediction;
+  }
 
   @Override
   public SeldonMessage predict(SeldonMessage payload) {
