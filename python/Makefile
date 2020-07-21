@@ -2,7 +2,16 @@ run:
 	python main.py
 
 start-baseline:
-	seldon-core-microservice --service-type MODEL Baseline REST
+	seldon-core-microservice \
+		--service-type MODEL \
+		Baseline \
+		REST
+
+start-protobufencoding:
+	seldon-core-microservice \
+		--service-type MODEL \
+		ProtobufEncoding \
+		REST
 
 install-dev:
 	pip install -r requirements.txt
