@@ -12,7 +12,7 @@ Python adapter for Java code leveraging JPype.
 
 ## Approaches
 
-## NoJava
+### NoJava
 
 The [`NoJava` wrapper](./python/NoJava.py) is a special case which implements
 the Java model in pure Python.
