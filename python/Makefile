@@ -1,6 +1,12 @@
 run:
 	python main.py
 
+start-nojava:
+	seldon-core-microservice \
+		--service-type MODEL \
+		NoJava \
+		REST
+
 start-baseline:
 	seldon-core-microservice \
 		--service-type MODEL \

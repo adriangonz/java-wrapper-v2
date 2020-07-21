@@ -7,7 +7,7 @@ generate:
 
 benchmark-rest:
 	hey \
-		-n 10000 \
+		-n 50000 \
 		-c 100 \
 		-m POST \
 		-T 'application/json' \
