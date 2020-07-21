@@ -14,10 +14,6 @@ jpype.startJVM(classpath=[classpath])
 
 # NOTE: Since the `io.` domain is not a standard TLD, we can't use import
 java__MyModel = jpype.JPackage("io").seldon.demo.MyModel
-java__SeldonMessage = jpype.JPackage("io").seldon.protos.PredictionProtos.SeldonMessage
-java__DefaultData = jpype.JPackage("io").seldon.protos.PredictionProtos.DefaultData
-java__Tensor = jpype.JPackage("io").seldon.protos.PredictionProtos.Tensor
-java__Arrays = jpype.JPackage("java").util.Arrays
 
 
 logger = logging.getLogger(__name__)
