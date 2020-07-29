@@ -15,7 +15,6 @@ public class MyModel implements SeldonPredictionService {
     SeldonMessage prediction = this.predict(input);
     byte[] rawPrediction = prediction.toByteArray();
     // System.out.printf("[JAVA] Raw prediction was %d elements long\n", rawPrediction.length);
-    // System.out.printf("[JAVA] Raw prediction was %s\n", Hex.encodeHexString(rawPrediction));
 
     return rawPrediction;
   }
