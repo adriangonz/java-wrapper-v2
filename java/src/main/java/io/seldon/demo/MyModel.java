@@ -5,11 +5,25 @@ import io.seldon.protos.PredictionProtos.DefaultData;
 import io.seldon.protos.PredictionProtos.SeldonMessage;
 import io.seldon.protos.PredictionProtos.Tensor;
 import io.seldon.wrapper.api.SeldonPredictionService;
+import io.seldon.wrapper.pb.ProtoBufUtils;
 import java.util.List;
 
 public class MyModel implements SeldonPredictionService {
 
-  public byte[] predict(byte[] payload) throws InvalidProtocolBufferException {
+  public String predictREST(String payload) throws InvalidProtocolBufferException {
+    // System.out.printf("[JAVA] Decoding raw payload from JSON\n");
+    SeldonMessage.Builder builder = SeldonMessage.newBuilder();
+    ProtoBufUtils.updateMessageBuilderFromJson(builder, payload);
+    SeldonMessage input = builder.build();
+
+    SeldonMessage prediction = this.predict(input);
+
+    String rawPrediction = ProtoBufUtils.toJson(prediction, true);
+
+    return rawPrediction;
+  }
+
+  public byte[] predictGRPC(byte[] payload) throws InvalidProtocolBufferException {
     SeldonMessage input = SeldonMessage.parseFrom(payload);
 
     SeldonMessage prediction = this.predict(input);

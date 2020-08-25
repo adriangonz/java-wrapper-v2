@@ -4,11 +4,12 @@ Python adapter for Java code leveraging JPype.
 
 ## Benchmarking
 
-|                         | Requests/sec | Average (ms) | Slowest (ms) | Fastest (ms) |
-| ----------------------- | ------------ | ------------ | ------------ | ------------ |
-| NoJava (REST)           | 439.8588     | 227.2        | 541.9        | 36.6         |
-| Baseline (REST)         | 93.0452      | 1065.0       | 2672.8       | 212.6        |
-| ProtobufEncoding (REST) | 167.5368     | 596.5        | 1752.9       | 7.5          |
+|                           | Requests/sec | Average (ms) | Slowest (ms) | Fastest (ms) |
+| ------------------------- | ------------ | ------------ | ------------ | ------------ |
+| NoJava (REST)             | 547.3972     | 180.5        | 2778.4       | 8.4          |
+| Baseline (REST)           | 142.4239     | 701.4        | 1113.2       | 121.3        |
+| ProtobufEncoding (REST)   | 238.6726     | 418.6        | 651.1        | 63.1         |
+| PayloadPassthrough (REST) | 264.0491     | 378.4        | 637.6        | 205.5        |
 
 ## Approaches
 
@@ -34,3 +35,18 @@ The [`ProtobufEncoding` wrapper](./python/ProtobufEncoding.py) encodes and
 decodes the full input from / to bytes using the `SeldonMessage` protobuf
 definition.
 This encoding / decoding happens on both the Java and Python side.
+
+### PayloadPassthrough
+
+The [`PayloadPassthrough` wrapper](./python/PayloadPassthrough.py) passes the
+input and output payloads as they are.
+In other words, the Python side won't try to encode / decode the request /
+response.
+Instead, it will use the input / output formats as a communication protocol and
+it will Java's responsibility to (de-)serialise it.
+
+Note that this approach requires changes on the Python side.
+You can check the [`java-wrapper-v2` branch in the
+`github.com/adriangonz/seldon-core`
+fork](https://github.com/adriangonz/seldon-core/tree/java-wrapper-v2) for a
+prototype of the changes.

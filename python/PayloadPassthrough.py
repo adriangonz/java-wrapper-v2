@@ -2,14 +2,14 @@ import os
 import logging
 import jpype
 
+from typing import Union
 from seldon_core.proto.prediction_pb2 import SeldonMessage
 from seldon_core.user_model import SeldonComponent
-from google.protobuf.json_format import ParseDict, MessageToDict
 
 logger = logging.getLogger(__name__)
 
 
-class ProtobufEncoding(SeldonComponent):
+class PayloadPassthrough(SeldonComponent):
     def __init__(self):
         logger.debug("[PYTHON] Instantiating MyModel object")
         self._model = None
@@ -33,24 +33,8 @@ class ProtobufEncoding(SeldonComponent):
         java__MyModel = jpype.JPackage("io").seldon.demo.MyModel
         self._model = java__MyModel()
 
-    def predict_raw(self, request) -> SeldonMessage:
-        is_proto = True
-        if not isinstance(request, SeldonMessage):
-            # If `request` is a dict, parse it into a protobuf object
-            is_proto = False
-            request = ParseDict(request, SeldonMessage())
-
-        logger.debug("[PYTHON] Serialising request")
-        serialised = request.SerializeToString()
-
+    def predict_raw(self, request: Union[SeldonMessage, str]) -> str:
         logger.debug("[PYTHON] Sending request to Java model")
-        prediction_raw = self._model.predictGRPC(serialised)
+        prediction_raw = self._model.predictREST(request)
 
-        logger.debug("[PYTHON] De-serialising response")
-        response = SeldonMessage()
-        response.ParseFromString(bytes(prediction_raw))
-
-        if not is_proto:
-            response = MessageToDict(response)
-
-        return response
+        return prediction_raw

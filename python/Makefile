@@ -19,6 +19,14 @@ start-protobufencoding:
 		ProtobufEncoding \
 		REST
 
+start-payloadpassthrough:
+	SHOULD_DECODE=false \
+	SHOULD_ENCODE=false \
+	seldon-core-microservice \
+		--service-type MODEL \
+		PayloadPassthrough \
+		REST
+
 install-dev:
 	pip install -r requirements.txt
 
