@@ -9,7 +9,7 @@ Python adapter for Java code leveraging JPype.
 | NoJava (REST)             | 547.3972     | 180.5        | 2778.4       | 8.4          |
 | Baseline (REST)           | 142.4239     | 701.4        | 1113.2       | 121.3        |
 | ProtobufEncoding (REST)   | 238.6726     | 418.6        | 651.1        | 63.1         |
-| PayloadPassthrough (REST) | 264.0491     | 378.4        | 637.6        | 205.5        |
+| PayloadPassthrough (REST) | 537.7259     | 185.7        | 537.6        | 66.0         |
 
 ## Approaches
 

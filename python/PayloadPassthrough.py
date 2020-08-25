@@ -26,7 +26,9 @@ class PayloadPassthrough(SeldonComponent):
         classpath = os.path.join(current_dir, "java", "build", "libs", "model-all.jar")
 
         logger.debug(f"[PYTHON] Starting JVM with classpath {classpath}")
-        jpype.startJVM(classpath=[classpath])
+        # NOTE: convertStrings must be set to True to avoid an explosion of
+        # interop calls when working with the returned Java strings
+        jpype.startJVM(classpath=[classpath], convertStrings=True)
 
         # TODO: Make class name configurable
         # Load MyModel class from Java
